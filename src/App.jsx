@@ -3,9 +3,11 @@ import tasks from "../tasks.js"
 function App() {
 
   // prepraro array in progress e backlog
-
+  const progressTasks = tasks.filter((task) => task.state === 'backlog' || task.state === 'in_progress')
 
   // preparo array completed 
+  const completedTasks = tasks.filter((task) => task.state === 'completed')
+
 
   return (
     <>
@@ -15,13 +17,55 @@ function App() {
         </div>
       </header>
       <main>
-        <section>
+        <section className="tasks-section">
           <div className="container">
-            <h2 className="task-title"></h2>
+            <h2 className="task-title">Current Tasks ({progressTasks.length})</h2>
           </div>
           <div className="container">
-            <ul className="task-list">
-              <li>task</li>
+            <ul className="tasks-list">
+              {progressTasks.map((task) => {
+
+                const { id , title, priority, estimatedTime, state} = task
+
+                return <li key={id} className="task-item">
+                  <div className="task-item_head">
+                    <span className="task-title">{title}</span>
+                    <span className="task-state">{state}</span>
+                  </div>
+                  <div>
+                    Priority : {priority}
+                  </div>
+                  <div>
+                    Estimated time: {estimatedTime}
+                  </div>
+                </li>
+              })}
+            </ul>
+          </div>
+        </section>
+        <section className="tasks-section">
+          <div className="container">
+            <h2 className="task-title">Current Tasks ({completedTasks.length})</h2>
+          </div>
+          <div className="container">
+            <ul className="tasks-list">
+              {completedTasks.map((task) => {
+
+                const { id , title, priority, estimatedTime, state} = task
+
+                return <li key={id} className="task-item">
+                  <div className="task-item_head">
+                    <span className="task-title">{title}</span>
+                    <span className="task-state">{state}</span>
+                  </div>
+                  <div>
+                    Priority : {priority}
+                  </div>
+                  <div>
+                    Estimated time: {estimatedTime}
+                  </div>
+                </li>
+              })}
             </ul>
           </div>
         </section>
